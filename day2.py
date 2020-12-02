@@ -25,15 +25,22 @@ def in_range(count, min, max):
     if(count >= int(min) and count <= int(max)):
         return True
 
+def breakdown(input):
+    char = input[0][1]
+    int_range = input[0][0]
+    min = int_range[0]
+    max = int_range[1]
+    return input[1], char, min, max
+
 def question_1():
     # Open text file with inputs
     f = open("day2.txt", "r")
     good_passwords = 0
     for line in f:
         split_line = setup_input(line)
-        char = split_line[0][1]
-        count = number_of_char(char, split_line[1])
-        if(in_range(count, split_line[0][0][0], split_line[0][0][1])):
+        password, char, min, max = breakdown(split_line)
+        count = number_of_char(char, password)
+        if(in_range(count, min, max)):
             good_passwords = good_passwords + 1
     f.close()
     print(good_passwords)
@@ -44,8 +51,8 @@ def question_2():
     good_passwords = 0
     for line in f:
         split_line = setup_input(line)
-        char = split_line[0][1]
-        if((char == split_line[1][int(split_line[0][0][0]) - 1]) != (char == split_line[1][int(split_line[0][0][1]) - 1])):
+        password, char, min, max = breakdown(split_line)
+        if((char == password[int(min) - 1]) != (char == password[int(max) - 1])):
             good_passwords = good_passwords + 1
     f.close()
     print(good_passwords)
