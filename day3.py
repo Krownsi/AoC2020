@@ -11,11 +11,8 @@ def collisions(incrementor, input_lines):
         count += 1
         if count % input_lines == 0:
             line = removeCarriage(line)
-            if len(line) <= index_right:
-                index_right = index_right % len(line)
-            char = line[index_right]
-            if char == "#":
-                number_of_trees += 1
+            if len(line) <= index_right: index_right %= len(line)
+            if line[index_right] == "#": number_of_trees += 1
             index_right += incrementor
 
     f.close()
