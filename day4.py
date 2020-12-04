@@ -26,7 +26,7 @@ def checkIfValueValid(input):
                     return 1
         elif key == 'hcl' and re.search('^#([0-9]|[a-f]){6}$', value):
             return 1
-        elif key == 'ecl' and ('amb' == value or 'blu' == value or 'brn' == value or 'gry' == value or 'grn' == value or 'hzl' == value or 'oth' == value):
+        elif key in ['ecl', 'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']:
             return 1
         elif key == 'pid' and re.search('^[0-9]{9}$', value):
             return 1
@@ -41,7 +41,7 @@ def checkIfValidQ2(passport):
 
 def checkIfValidQ1(passport):
     str_passport = ''.join(passport)
-    if ("hcl:" in str_passport) and ("ecl:" in str_passport) and ("pid:" in str_passport) and ("eyr:" in str_passport) and ("byr:" in str_passport) and ("iyr:" in str_passport) and ("hgt:" in str_passport):
+    if all(key in str_passport for key in ['hcl:', 'ecl:', 'pid:', 'eyr:', 'byr:', 'iyr:', 'hgt:']):
         return 1
     return 0
 
