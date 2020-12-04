@@ -3,13 +3,7 @@ import re
 def removeCarriage(line):
     return line.strip('\n')
 
-def checkIfValidQ1(passport, score):
-    str_passport = ''.join(passport)
-    if ("hcl:" in str_passport) and ("ecl:" in str_passport) and ("pid:" in str_passport) and ("eyr:" in str_passport) and ("byr:" in str_passport) and ("iyr:" in str_passport) and ("hgt:" in str_passport):
-        score += 1
-    return score
-
-def checkIfDatesValid(input):
+def checkIfValueValid(input):
     entity = input.split(':')
     if(len(entity) != 1):
         value = entity[1]
@@ -38,12 +32,18 @@ def checkIfDatesValid(input):
             return 1
     return 0
 
-def checkIfValidQ2(passport, score):
-    valid_list = map(checkIfDatesValid, passport)
+def checkIfValidQ2(passport):
+    valid_list = map(checkIfValueValid, passport)
     number_of_checks_passed = sum(list(valid_list))
     if(number_of_checks_passed == 7):
-        score += 1
-    return score
+        return 1
+    return 0
+
+def checkIfValidQ1(passport):
+    str_passport = ''.join(passport)
+    if ("hcl:" in str_passport) and ("ecl:" in str_passport) and ("pid:" in str_passport) and ("eyr:" in str_passport) and ("byr:" in str_passport) and ("iyr:" in str_passport) and ("hgt:" in str_passport):
+        return 1
+    return 0
 
 def run_logic(part):
     f = open("day4.txt", "r")
@@ -52,22 +52,18 @@ def run_logic(part):
     for line in f:
         line = removeCarriage(line)
         if(line == ""):
-            if(part == 1):
-                valid_passports = checkIfValidQ1(passport, valid_passports)
-            else:
-                valid_passports = checkIfValidQ2(passport, valid_passports)
+            if(part == 1): valid_passports += checkIfValidQ1(passport)
+            else: valid_passports += checkIfValidQ2(passport)
             passport = []
         passport += line.split(' ')
-    if(part == 1):
-        valid_passports = checkIfValidQ1(passport, valid_passports)
-    else:
-        valid_passports = checkIfValidQ2(passport, valid_passports)
-    print(valid_passports)
+    if(part == 1): valid_passports += checkIfValidQ1(passport)
+    else: valid_passports += checkIfValidQ2(passport)
     f.close()
+    return valid_passports
 
 def main():
-    run_logic(2)
-    run_logic(1)
+    print(run_logic(2))
+    print(run_logic(1))
 
 if __name__ == "__main__":
     main()
