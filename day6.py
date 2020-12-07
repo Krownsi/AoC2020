@@ -8,10 +8,8 @@ def countYes(inputValue):
         for char in people:
             if char in listOfChars: listOfChars[char] += 1
             else: listOfChars[char] = 1
-    for key in listOfChars.keys():
-        if listOfChars[key] == len(inputValue):
-            similar += 1 
-    return similar
+    result = map(lambda x: 1 if listOfChars[x] == len(inputValue) else 0, listOfChars.keys())
+    return sum(result)
 
 def run():
     f = open("day6.txt", "r")
