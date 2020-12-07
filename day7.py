@@ -29,30 +29,24 @@ def run2():
     f = open("day7.txt", "r")  
     bag_dictionary = {}
     previous_check = 0
-    while (True):
-        for line in f:
-            line = removeCarriage(line)
-            if 'no' in line:
-                bag_dictionary[line.split('bags')[0] + 'bag'] = [('0', '0')]
-                bag_dictionary[line.split('bags')[0] + 'bags'] = [('0', '0')]
-                continue
-            # Add values to the dictionary
-            parent_bag = line.split('bags')[0]
-            bag_dictionary[parent_bag + 'bag'] = []
-            bag_dictionary[parent_bag + 'bags'] = []
-            # Split each section
-            list_of_bags = line.split('contain')[1].split(',')
-            for bag in list_of_bags:
-                bag_attributes = bag.split(' ')
-                bag_dictionary[parent_bag + 'bag'] += [(bag_attributes[2] + ' ' + bag_attributes[3] + ' bag', bag_attributes[1])]
-                bag_dictionary[parent_bag + 'bags'] += [(bag_attributes[2] + ' ' + bag_attributes[3] + ' bag', bag_attributes[1])]
-        if previous_check != len(bag_dictionary.keys()): previous_check = len(bag_dictionary.keys())
-        else: break
-    print(count_bags_in_tree(bag_dictionary, 'shiny gold bag', 1))
-
+    for line in f:
+        line = removeCarriage(line)
+        if 'no' in line:
+            bag_dictionary[line.split(' bags')[0]] = [('0', '0')]
+            continue
+        # Add values to the dictionary
+        parent_bag = line.split(' bags')[0]
+        bag_dictionary[parent_bag] = []
+        # Split each section
+        list_of_bags = line.split('contain')[1].split(',')
+        for bag in list_of_bags:
+            bag_attributes = bag.split(' ')
+            bag_dictionary[parent_bag] += [(bag_attributes[2] + ' ' + bag_attributes[3], bag_attributes[1])]
+    
+    print(count_bags_in_tree(bag_dictionary, 'shiny gold', 1) - 1)
 
 def main():
-    #run1()
+    run1()
     run2()
 
 if __name__ == "__main__":
