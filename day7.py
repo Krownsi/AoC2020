@@ -22,8 +22,8 @@ def count_bags_in_tree(tree, start, number_of_parents):
     for bag in tree[start]:
         if bag[0] == '0':
             return 1
-        total_count += 1 + int(bag[1]) * int(count_bags_in_tree(tree, bag[0], bag[1]))
-    return total_count
+        total_count += int(bag[1]) * int(count_bags_in_tree(tree, bag[0], bag[1]))
+    return total_count + 1
 
 def run2():
     f = open("day7.txt", "r")  
