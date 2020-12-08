@@ -49,11 +49,12 @@ def run2():
             instruction_set[current_position][3] += 1
             current_position += 1
         elif instruction[0] == 'jmp':
-            next_instruction = instruction_set[current_position + 1]
-            if((current_position + 2 > last_cell and (next_instruction[0] == 'acc' or next_instruction[0] == 'nop')) or (next_instruction[0] == 'jmp' and next_instruction[1] == '+' and next_instruction[2] + current_position + 1 > last_cell)):
-                current_position += 1
-                continue
-            instruction_set[current_position][3] += 1
+            if current_position != last_cell:
+                next_instruction = instruction_set[current_position + 1]
+                if((current_position + 2 > last_cell and (next_instruction[0] == 'acc' or next_instruction[0] == 'nop')) or (next_instruction[0] == 'jmp' and next_instruction[1] == '+' and next_instruction[2] + current_position + 1 > last_cell)):
+                    current_position += 1
+                    continue
+                instruction_set[current_position][3] += 1
             if instruction[1] == '+': current_position += instruction[2]
             else: current_position -= instruction[2]
         else: 
@@ -61,11 +62,12 @@ def run2():
             if instruction[1] == '+': new_current += instruction[2]
             else: new_current -= instruction[2]
             next_instruction = instruction_set[new_current]
-            if((new_current + 2 > last_cell and (next_instruction[0] == 'acc' or next_instruction[0] == 'nop')) or (next_instruction[0] == 'jmp' and next_instruction[1] == '+' and next_instruction[2] + new_current > last_cell)):
+            if((new_current + 1 > last_cell and (next_instruction[0] == 'acc' or next_instruction[0] == 'nop')) or (next_instruction[0] == 'jmp' and next_instruction[1] == '+' and next_instruction[2] + new_current > last_cell)):
                 current_position = new_current
                 continue
             instruction_set[current_position][3] += 1
             current_position += 1
+        print(str(accumulator) + ': ' + str(current_position))
     f.close()
     print(accumulator)
 
