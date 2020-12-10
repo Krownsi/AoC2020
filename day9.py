@@ -11,21 +11,18 @@ def checkIfSum(value, rangeNumbers, size):
     return False
 
 def contiguous(numbers, value):
-    currentRange, summation, internalRange = 0, 0, 0
-    for cellValue in numbers[currentRange: (len(numbers)-1)]:
-        if cellValue > value: 
-            currentRange += 1
+    summation, goodSum = 0, []
+    for outerCell in enumerate(numbers):
+        if outerCell[1] > value: 
             continue
-        for internalValue in numbers[currentRange: (len(numbers)-1)]:
-            internalRange += 1
+        for internalCell in enumerate(numbers[outerCell[0]: (len(numbers)-1)]):
             if summation == value: 
-                return numbers[currentRange:internalRange]
+                return goodSum
             if summation > value: 
-                summation, internalRange = 0, currentRange
-                currentRange += 1
+                goodSum, summation = [], 0
                 break
-            summation += internalValue
-    return []
+            summation += internalCell[1]
+            goodSum += [internalCell[1]]
 
 def getMaxAndMin(rangeSum):
     minim, maxim = -1, -1
