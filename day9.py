@@ -6,8 +6,7 @@ def setup():
 def checkIfSum(value, rangeNumbers, size):
     for outer in range(size):
         if rangeNumbers[outer] >= value: continue
-        for inner in range(outer + 1, size):
-            if rangeNumbers[outer] + rangeNumbers[inner] == value: return True
+        elif any(map(lambda inner: rangeNumbers[outer] + rangeNumbers[inner] == value, range(outer + 1, size))): return True
     return False
 
 def contiguous(numbers, value):
@@ -18,19 +17,11 @@ def contiguous(numbers, value):
         for internalCell in enumerate(numbers[outerCell[0]: (len(numbers)-1)]):
             if summation == value: 
                 return goodSum
-            if summation > value: 
+            elif summation > value: 
                 goodSum, summation = [], 0
                 break
             summation += internalCell[1]
             goodSum += [internalCell[1]]
-
-def getMaxAndMin(rangeSum):
-    minim, maxim = -1, -1
-    for current in rangeSum:
-        if minim == -1: minim, maxim = current, current
-        elif current > maxim: maxim = current
-        elif current < minim: minim = current
-    return minim, maxim
 
 def run():
     numbers, preamble, iterator, value = setup(), 25, 0, 0
@@ -39,8 +30,7 @@ def run():
         if(not found): break
     print('Q1: ' + str(value))
     rangeSum = contiguous(numbers, value)
-    maxim, minim = getMaxAndMin(rangeSum)
-    print('Q2: ' + str(maxim + minim))
+    print('Q2: ' + str(min(rangeSum) + max(rangeSum)))
 
 def main():
     run()
