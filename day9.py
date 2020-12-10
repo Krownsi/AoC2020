@@ -37,9 +37,10 @@ def run():
     for current in range(preamble, len(numbers)):
         value, found = numbers[current], checkIfSum(numbers[current], numbers[current - preamble: current], preamble)
         if(not found): break
+    print('Q1: ' + str(value))
     rangeSum = contiguous(numbers, value)
     maxim, minim = getMaxAndMin(rangeSum)
-    print(maxim + minim)
+    print('Q2: ' + str(maxim + minim))
 
 def main():
     run()
