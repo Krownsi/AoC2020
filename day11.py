@@ -22,13 +22,11 @@ def countAdj(x, y, seats):
     return list(map(lambda char: char == '#', testing_array))
 
 def updateL(x, y, seats):
-    valid = sum(countAdj(x, y , seats))
-    if valid == 0: return '#'
+    if sum(countAdj(x, y , seats)) == 0: return '#'
     return 'L'
 
 def updateH(x, y, seats):
-    value = sum(countAdj(x, y , seats))
-    if value >= 4: return 'L'
+    if sum(countAdj(x, y , seats)) >= 4: return 'L'
     return '#'
 
 def numberOfOccupied(seat_arrangment):
@@ -50,49 +48,52 @@ def part1():
 
 def countAdj2(x, y, seats):
     testing_array = []
+    track = [True] * 8
     
     for inc in range(1, 10000):
-        if seats[x+inc][y] == "#" or seats[x+inc][y] == "L" or seats[x+inc][y] == "0": 
-            testing_array += seats[x+inc][y]
-            break
-    for inc in range(1, 10000):
-        if seats[x-inc][y] == "#" or seats[x-inc][y] == "L" or seats[x-inc][y] == "0": 
-            testing_array += seats[x-inc][y]
-            break
-    for inc in range(1, 10000):
-        if seats[x][y+inc] == "#" or seats[x][y+inc] == "L" or seats[x][y+inc] == "0": 
-            testing_array += seats[x][y+inc]
-            break
-    for inc in range(1, 10000):
-        if seats[x][y-inc] == "#" or seats[x][y-inc] == "L" or seats[x][y-inc] == "0": 
-            testing_array += seats[x][y-inc]
-            break
-    for inc in range(1, 10000):
-        if seats[x-inc][y-inc] == "#" or seats[x-inc][y-inc] == "L" or seats[x-inc][y-inc] == "0": 
-            testing_array += seats[x-inc][y-inc]
-            break
-    for inc in range(1, 10000):
-        if seats[x+inc][y+inc] == "#" or seats[x+inc][y+inc] == "L" or seats[x+inc][y+inc] == "0": 
-            testing_array += seats[x+inc][y+inc]
-            break
-    for inc in range(1, 10000):
-        if seats[x+inc][y-inc] == "#" or seats[x+inc][y-inc] == "L" or seats[x+inc][y-inc] == "0": 
-            testing_array += seats[x+inc][y-inc]
-            break
-    for inc in range(1, 10000):
-        if seats[x-inc][y+inc] == "#" or seats[x-inc][y+inc] == "L" or seats[x-inc][y+inc] == "0": 
-            testing_array += seats[x-inc][y+inc]
-            break
+        if track[0]:
+            if seats[x+inc][y] == "#" or seats[x+inc][y] == "L" or seats[x+inc][y] == "0": 
+                testing_array += seats[x+inc][y]
+                track[0] = False
+        if track[1]:    
+            if seats[x-inc][y] == "#" or seats[x-inc][y] == "L" or seats[x-inc][y] == "0": 
+                testing_array += seats[x-inc][y]
+                track[1] = False
+        if track[2]:    
+            if seats[x][y+inc] == "#" or seats[x][y+inc] == "L" or seats[x][y+inc] == "0": 
+                testing_array += seats[x][y+inc]
+                track[2] = False        
+        if track[3]:
+            if seats[x][y-inc] == "#" or seats[x][y-inc] == "L" or seats[x][y-inc] == "0": 
+                testing_array += seats[x][y-inc]
+                track[3] = False
+        if track[4]:
+            if seats[x-inc][y-inc] == "#" or seats[x-inc][y-inc] == "L" or seats[x-inc][y-inc] == "0": 
+                testing_array += seats[x-inc][y-inc]
+                track[4] = False
+        if track[5]:
+            if seats[x+inc][y+inc] == "#" or seats[x+inc][y+inc] == "L" or seats[x+inc][y+inc] == "0": 
+                testing_array += seats[x+inc][y+inc]
+                track[5] = False
+        if track[6]:
+            if seats[x+inc][y-inc] == "#" or seats[x+inc][y-inc] == "L" or seats[x+inc][y-inc] == "0": 
+                testing_array += seats[x+inc][y-inc]
+                track[6] = False
+        if track[7]:
+            if seats[x-inc][y+inc] == "#" or seats[x-inc][y+inc] == "L" or seats[x-inc][y+inc] == "0": 
+                testing_array += seats[x-inc][y+inc]
+                track[7] = False
+
+        if sum(track) == 0: break
+
     return list(map(lambda char: char == '#', testing_array))
 
 def updateL2(x, y, seats):
-    valid = sum(countAdj2(x, y , seats))
-    if valid == 0: return '#'
+    if sum(countAdj2(x, y , seats)) == 0: return '#'
     return 'L'
 
 def updateH2(x, y, seats):
-    value = sum(countAdj2(x, y , seats))
-    if value >= 5: return 'L'
+    if sum(countAdj2(x, y , seats)) >= 5: return 'L'
     return '#'
 
 def part2():
@@ -107,7 +108,7 @@ def part2():
     return numberOfOccupied(seats)
 
 def main():
-    # print(part1())
+    print(part1())
     print(part2())
 
 if __name__ == "__main__":
