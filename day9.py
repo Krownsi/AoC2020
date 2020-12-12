@@ -1,6 +1,7 @@
 def setup():
     f = open("day9.txt", "r")
     numbers = [int(line.strip()) for line in f.readlines() if line.strip()]
+    f.close()
     return numbers
 
 def checkIfSum(value, rangeNumbers, size):

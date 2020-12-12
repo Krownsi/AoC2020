@@ -4,6 +4,7 @@ def setup():
     f = open("day10.txt", "r")
     numbers = [int(line.strip()) for line in f.readlines() if line.strip()]
     numbers = [0] + numbers + [max(numbers) + 3]
+    f.close()
     return numbers
 
 def part(numbers):
